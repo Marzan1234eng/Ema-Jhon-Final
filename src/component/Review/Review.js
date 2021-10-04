@@ -3,13 +3,15 @@ import {getDatabaseCart, processOrder, removeFromDatabaseCart} from "../../utili
 import fakeData from "../../fakeData";
 import ReviewItem from "../ReviewItem/ReviewItem";
 import Cart from "../Cart/Cart";
-import {Link} from "react-router-dom";
+import happyImage from '../../images/giphy.gif';
 
 const Review = () => {
     const [cart, setCart] = useState([]);
+    const [orderPlaced, setOrderPlaced] = useState(false);
 
     const handlePlaceOrder = () => {
-        setCart();
+        setCart([]);
+        setOrderPlaced(true);
         processOrder();
     }
 
@@ -34,6 +36,8 @@ const Review = () => {
     },[])
     //const total = cart.reduce((total, product) => total+product.quantity,0);
 
+    const thankyou = <img src={happyImage} alt=""/>
+
     return (
         <div className="shop-container">
             <div className="product-container">
@@ -44,6 +48,9 @@ const Review = () => {
                         product={pd}
                     >
                     </ReviewItem>)
+                }
+                {
+                    orderPlaced && thankyou
                 }
             </div>
             <div className="cart-container">
