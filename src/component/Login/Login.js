@@ -5,12 +5,17 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/
 import {useContext, useState} from "react";
 import {FacebookAuthProvider, updateProfile, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
 import {UserContext} from "../../App";
+import {useHistory, useLocation} from "react-router-dom";
 
 firebase.initializeApp(firebaseConfig);
 
 function Login() {
 
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const history = useHistory();
+    const location = useLocation();
+    let { from } = location.state || { from: { pathname: "/"} };
+
     const [newUser, setNewUser] = useState(false);
 
     const [user, setUser] = useState({
@@ -102,7 +107,7 @@ function Login() {
                     newUserInfo.success = true;
                     setUser(newUserInfo);
                     setLoggedInUser(newUserInfo); //context api use kore userlogin hocche naki loggin e set korchi
-
+                    history.replace(from);
                 })
                 .catch((error) => {
                     const newUserInfo = {...user};
