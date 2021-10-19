@@ -1,5 +1,5 @@
 import './App.css';
-import React from "react";
+import React, {createContext, useState} from "react";
 import Header from "./component/Header/Header";
 import Shop from "./component/Shop/Shop";
 import {
@@ -15,9 +15,13 @@ import ProductDetail from "./component/ProductDetail/ProductDetail";
 import Login from "./component/Login/Login";
 import Shipment from "./component/Shipment/Shipment";
 
+export const UserContext = createContext();
+
 function App() {
+    const [loggedInUser, setLoggedInUser] = useState({});
   return (
-    <div>
+    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+        <h3>Email: {loggedInUser.email}</h3>
         <Header></Header>
         <Router>
             <Switch>
@@ -47,7 +51,7 @@ function App() {
                 </Route>
             </Switch>
         </Router>
-    </div>
+    </UserContext.Provider>
   );
 }
 
