@@ -25,7 +25,8 @@ export const handleGoogleSignIn = () => {
                 name: displayName,
                 email: email,
                 photo: photoURL,
-                error: ''
+                error: '',
+                success: true
             }
             return signedInUser;
             //console.log(displayName,email,photoURL);
@@ -42,6 +43,7 @@ export const handleFbSignIn = () => {
         .then((result) => {
             // The signed-in user info.
             const user = result.user;
+            user.success = true;
 
             // This gives you a Facebook Access Token. You can use it to access the Facebook API.
             const credential = FacebookAuthProvider.credentialFromResult(result);
@@ -80,49 +82,56 @@ export const handleSignOut = () => {
     //console.log("sign out");
 }
 
-/*
-export const createUserByEmailAndPassword = () => {
-    createUserWithEmailAndPassword(auth, user.email, user.password)
+export const createUserByEmailAndPassword = (name, email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
+            const newUserInfo = user;
+            newUserInfo.error = '';
+            newUserInfo.success = true;
+            updateUserName(name);
+            return newUserInfo;
             // ...
         })
         .then(res=>{
-            const newUserInfo = {...user};
+            const newUserInfo = res.user;
             newUserInfo.error = '';
             newUserInfo.success = true;
-            setUser(newUserInfo);
-            updateUserName(user.name);
+            updateUserName(name);
+            return newUserInfo;
         })
         .catch((error) => {
-            const newUserInfo = {...user};
+            const newUserInfo = {};
             newUserInfo.error = error.message;
             newUserInfo.success = false;
-            setUser(newUserInfo);
+            return newUserInfo;
         });
 }
 
-export const signInByEmailAndPassword = () => {
-    signInWithEmailAndPassword(auth, user.email, user.password)
+export const signInByEmailAndPassword = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+            console.log("user-not-created");
             // Signed in
             const user = userCredential.user;
-            console.log(userCredential.user);
-        })
-        .then(res => {
-            const newUserInfo = {...user};
+            const newUserInfo = user;
             newUserInfo.error = '';
             newUserInfo.success = true;
-            setUser(newUserInfo);
-            setLoggedInUser(newUserInfo); //context api use kore userlogin hocche naki loggin e set korchi
-            history.replace(from);
+            console.log("sign in check",newUserInfo);
+            return newUserInfo;
+        })
+        .then(res => {
+            const newUserInfo = res.user;
+            newUserInfo.error = '';
+            newUserInfo.success = true;
+            return newUserInfo;
         })
         .catch((error) => {
-            const newUserInfo = {...user};
+            const newUserInfo = {};
             newUserInfo.error = error.message;
             newUserInfo.success = false;
-            setUser(newUserInfo);
+            return newUserInfo;
         });
 }
 
@@ -135,4 +144,4 @@ const updateUserName = (name) => {
     }).catch((error) => {
         console.log(error);
     });
-}*/
+}
