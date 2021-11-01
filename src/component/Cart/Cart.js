@@ -8,7 +8,7 @@ const Cart = (props) => {
     let productPrice = 0;
     for (let i = 0; i < cart.length; i++) {
         const product = cart[i];
-        productPrice = Math.round(productPrice + product.price * product.quantity);
+        productPrice = Math.round(productPrice + product.price * product.quantity || 1);
     }
 
     let shipping = 0;
