@@ -7,9 +7,15 @@ import {addToDatabaseCart, getDatabaseCart} from "../../utilities/databaseManage
 import {Link} from "react-router-dom";
 
 const Shop = () => {
-    const first10 = fakeData.slice(0,10);
-    const [products, setProducts] = useState(first10);
+    //const first10 = fakeData.slice(0,10);
+    const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
+
+    useEffect(()=>{
+        fetch('http://localhost:5000/products')
+            .then(res => res.json())
+            .then(data => setProducts(data))
+    },[])
 
     useEffect(() =>{
         const savedCart = getDatabaseCart();
