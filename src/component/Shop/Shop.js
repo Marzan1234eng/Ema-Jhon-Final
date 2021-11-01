@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import fakeData from "../../fakeData";
 import '../Shop/Shop.css';
 import Product from "../Product/Product";
 import Cart from "../Cart/Cart";
@@ -20,14 +19,17 @@ const Shop = () => {
     useEffect(() =>{
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        const previousCart = productKeys.map( existingkey => {
-            const product = fakeData.find(pd => pd.key === existingkey);
-            product.quantity = savedCart[existingkey];
-            return product;
-        })
         console.log(products);
-        setCart(previousCart);
-    },[])
+        console.log(productKeys);
+        if (products.length){
+            const previousCart = productKeys.map( existingkey => {
+                const product = products.find(pd => pd.key === existingkey);
+                product.quantity = savedCart[existingkey];
+                return product;
+            })
+            setCart(previousCart);
+        }
+    },[products])
 
     /*product theke parameter peye setCart e add kore cart e props diye pass*/
     const handleAddProduct = (product) =>{

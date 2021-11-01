@@ -10,7 +10,6 @@ import {
 } from "./loginManager";
 import {updateProfile, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
 import {getAuth} from "firebase/auth";
-import Header from "../Header/Header";
 
 
 function Login() {
