@@ -1,8 +1,8 @@
 import React from 'react';
-import {Link} from "react-router-dom";
 
 const Cart = (props) => {
     const cart = props.cart;
+    console.log(cart);
     /*const total = cart.reduce((total,pd) => total + pd.price,0);*/
 
     let productPrice = 0;
