@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {getDatabaseCart, processOrder, removeFromDatabaseCart} from "../../utilities/databaseManager";
+import {getDatabaseCart, removeFromDatabaseCart} from "../../utilities/databaseManager";
 import ReviewItem from "../ReviewItem/ReviewItem";
 import Cart from "../Cart/Cart";
 import happyImage from '../../images/giphy.gif';
@@ -25,7 +25,7 @@ const Review = () => {
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart); //database e j product gulo ache tader key return korbe
 
-        fetch('http://localhost:5000/productByKeys',{
+        fetch('https://stormy-harbor-62507.herokuapp.com/productByKeys',{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -36,7 +36,7 @@ const Review = () => {
             .then(data => setCart(data))
     },[])
 
-    const thankyou = <img src={happyImage} alt=""/>
+    const thankYou = <img src={happyImage} alt=""/>
 
     return (
         <div className="shop-container">
@@ -50,7 +50,7 @@ const Review = () => {
                     </ReviewItem>)
                 }
                 {
-                    orderPlaced && thankyou
+                    orderPlaced && thankYou
                 }
             </div>
             <div className="cart-container">

@@ -11,7 +11,7 @@ const Shop = () => {
     const [cart, setCart] = useState([]);
 
     useEffect(()=>{
-        fetch('http://localhost:5000/products')
+        fetch('https://stormy-harbor-62507.herokuapp.com/products')
             .then(res => res.json())
             .then(data => setProducts(data))
     },[])
@@ -19,7 +19,7 @@ const Shop = () => {
     useEffect(() =>{
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        fetch('http://localhost:5000/productByKeys',{
+        fetch('https://stormy-harbor-62507.herokuapp.com/productByKeys',{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -33,11 +33,11 @@ const Shop = () => {
     /*product theke parameter peye setCart e add kore cart e props diye pass*/
     const handleAddProduct = (product) =>{
         const toBeAddedKey = product.key;
-        const sameProduct = cart.find( pd => pd.key === toBeAddedKey);
-
+        const sameProduct = cart.find(pd => pd.key === toBeAddedKey);
+        console.log("handle product",sameProduct);
         let count = 1;
         let newCart;
-        if (sameProduct){
+        if(sameProduct){
             count = sameProduct.quantity + 1;
             sameProduct.quantity = count;
             const others = cart.filter(pd => pd.key !== toBeAddedKey);
@@ -47,12 +47,9 @@ const Shop = () => {
             product.quantity = 1;
             newCart = [...cart, product];
         }
-
         setCart(newCart);
-        /*const sameProduct = newCart.filter( pd => pd.key === product.key); //product e clcik korle j product pabe tar key er sathe newCart e joto gulo key math hobe tar count return korbe
-        const count = sameProduct.length; //j product er count return korbe tar length count e assign korlo*/
-        addToDatabaseCart(product.key, count); // database e oi product er key & oi product koto gulo ache pass korbe
-    };
+        addToDatabaseCart(product.key, count);
+    }
 
     //console.log(products);
 
