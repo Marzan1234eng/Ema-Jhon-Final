@@ -149,7 +149,7 @@ function Login() {
                 {
                     user?.isSignedIn ? <button onClick={signOut}>Sign Out</button>
                         :
-                        <button onClick={googleSignIn}>Sign In</button>
+                        <button onClick={googleSignIn}>Sign In using Google</button>
                 }
                 <br/>
                 <button onClick={fbSignIn}>Sign in using facebook</button>
@@ -178,8 +178,8 @@ function Login() {
                     <br/>
                     <input type="submit" value={newUser ? 'Sign Up' : 'Log In'}/>
                 </form>
-                <p style={{color: "red"}}>{user.error}</p>
-                {user.success && <p style={{color: "green"}}>User {newUser ? 'created' : 'logged in'} successfully</p>}
+                <p style={{color: "red"}}>{user?.error}</p>
+                {user?.success && <p style={{color: "green"}}>User {newUser ? 'created' : 'logged in'} successfully</p>}
             </div>
         );
     }
